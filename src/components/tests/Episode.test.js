@@ -3,11 +3,46 @@ import { render, fireEvent, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import Episode from "./../Episode";
 
-test("renders without error", () => {});
+const testEpisode = {
+  id: 1,
+  name: "",
+  image: "",
+  season: 1,
+  number: 1,
+  summary: "ABC",
+  runtime: 1,
+};
 
-test("renders the summary test passed as prop", () => {});
+test("renders without error", () => {
+  render(<Episode episode={testEpisode} />);
+});
 
-test("renders default image when image is not defined", () => {});
+test("renders the summary test passed as prop", () => {
+  //Arrange
+  render(<Episode episode={testEpisode} />);
+
+  //Act
+  const value = screen.queryByTestId("episode-summary");
+
+  //Assert
+  expect(value).toHaveTextContent("ABC");
+});
+
+test("renders default image when image is not defined", () => {
+  //Arrange
+  render(<Episode episode={testEpisode} />);
+
+  //Act
+  const img = screen.getByAltText(
+    "https://i.ibb.co/2FsfXqM/stranger-things.png"
+  );
+
+  //Assert
+  expect(img).toHaveAttribute(
+    "src",
+    "https://i.ibb.co/2FsfXqM/stranger-things.png"
+  );
+});
 
 // ----- EXAMPLE EPISODE TEST OBJECT -----
 // const exampleEpisodeData = {
